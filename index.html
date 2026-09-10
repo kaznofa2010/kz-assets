@@ -229,28 +229,20 @@
   </header>
 
   <!-- GoatCounter tracking -->
-  <script
-    data-goatcounter="https://kaznofa.goatcounter.com/count"
-    async
-    src="https://gc.zgo.at/count.js">
-  </script>
-
-  <!-- Visible visitor counter -->
   <script>
-    window.addEventListener("load", function () {
-      const counter = document.getElementById("visitor-count");
-
-      if (window.goatcounter && window.goatcounter.visit_count) {
-        counter.textContent = "";
-
-        window.goatcounter.visit_count({
-          append: "#visitor-count"
-        });
-      } else {
-        counter.textContent = "Unavailable";
-      }
+  fetch(
+    "https://kaznofa.goatcounter.com/counter/" +
+    encodeURIComponent(window.location.pathname) +
+    ".json"
+  )
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("visitor-count").textContent = data.count;
+    })
+    .catch(() => {
+      document.getElementById("visitor-count").textContent = "0";
     });
-  </script>
+</script>
 
 </body>
 </html>
